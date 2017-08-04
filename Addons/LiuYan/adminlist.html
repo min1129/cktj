@@ -1,0 +1,37 @@
+<notempty name="_list">
+    <div class="dialogs">
+        <volist name="_list" id="vo">
+            <div class="itemdiv dialogdiv">
+                <div class="body">
+                    <div class="time">
+                        <i class="icon-time"></i>
+                        <span class="green">{$vo.create_time|date="Y-m-d H:i",###}</span>
+                    </div>
+                    <div class="name">
+                        姓名: <a href="#">{$vo.name}</a>
+                    </div>
+                    <div class="name">
+                        邮箱: <a href="#">{$vo.email|default="无"}</a>
+                    </div>
+                    <div class="name">
+                        电话: <a href="#">{$vo.phone|default="无"}</a>
+                    </div>
+                    <div class="text">
+                        <span style="color:#999">留言内容:</span><br/>
+                        {$vo.content}
+                    </div>
+                    <div class="tools">
+                        <a href="{:addons_url('LiuYan://Liuyan/del?ids='.$vo['id'])}" class="ajax-get" title="删除"><i class="red icon-trash bigger-150"></i></a>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+    <else/>
+    <h1 class="text-center">暂无留言!</h1>
+</notempty>
+<!-- 分页 -->
+<div class="page">
+    {$_page}
+</div>
+</div>

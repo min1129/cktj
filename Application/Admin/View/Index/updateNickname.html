@@ -1,0 +1,33 @@
+<extend name="Common@Base/base" />
+<block name="title">
+    修改昵称
+</block>
+<block name="sidebar">
+    <style>
+        .main-content{
+            margin-left: 0;
+        }
+    </style>
+</block>
+<block name="content">
+    <div class="tab-content">
+    <form action="{:U()}" method="post" class="form-horizontal normal-form" autocomplete="off">
+		<div class="form-group">
+			<label class="item-label">密码：<span class="check-tips">（请输入密码）</span></label>
+			<div class="controls">
+				<input type="password" name="password" class="text input-large"  autocomplete="off"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-label">姓名：<span class="check-tips">（请输入新姓名）</span></label>
+			<div class="controls">
+				<input type="text" name="nickname" class="text input-large" autocomplete="off" value="{:user_field('nickname')}"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-sm btn-primary ajax-post" target-form="form-horizontal">确 认</button>
+			<button class="btn btn-sm " onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+	</div>
+</block>

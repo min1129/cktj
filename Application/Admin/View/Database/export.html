@@ -1,0 +1,102 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    数据备份
+</block>
+<block name="content">
+    <div class="btn-group">
+        <a id="export"  class="btn btn-primary btn-sm"   href="javascript:;">立即备份</a>
+        <a class="btn btn-primary btn-sm ajax-post " target-form="ids" href="{:U('optimize')}">优化表</a>
+        <a class="btn btn-primary btn-sm ajax-post" target-form="ids" href="{:U('repair')}">修复表</a>
+    </div>
+    <div class="table-responsive" >
+        <form id="export-form" action="{:U('export')}">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        <label>
+                        <input class="check-all" checked="true" type="checkbox">
+                        </label>
+                    </th>
+                    <th>表名</th>
+                    <th>数据量</th>
+                    <th>数据大小</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="table">
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                            <input class="ids ace" checked="chedked" type="checkbox" name="tables[]" value="{$table.name}">
+                            <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td>{$table.name}</td>
+                        <td>{$table.rows}</td>
+                        <td>{$table.data_length|format_bytes}</td>
+                        <td>{$table.create_time}</td>
+                        <td class="action">
+                            <a class="ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>&nbsp;
+                            <a class="ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</block>
+
+<block name="js">
+    <script type="text/javascript">
+        !function (){
+            var $export_form = $("#export-form");
+            var tables;
+            var rate = 0;
+            $("#export").click(function(){
+                showLoading('正在准备备份!请不要关闭此页面');
+                $.post(
+                    $($export_form).attr("action"),
+                    $($export_form).serialize(),
+                    function(data){
+                        removeLoading();
+                        if(data.status){
+                            tables = data.tables;
+                            showProgress('备份'+tables[0]+"(剩于"+(tables.length-1)+"张表)",1);
+                            backup(data.tab,false);
+                            window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+                        } else {
+                            errorAlert(data.msg);
+                        }
+                    },
+                    "json"
+                );
+                return false;
+            });
+
+            function backup(tab, status){
+                //是否进入下个数据表的备份
+                status && changeProgress(rate,'备份'+tables[tab.id]+"(剩于"+(tables.length-tab.id-1)+"张表)");
+                $.get($export_form.attr("action"), tab, function(data){
+                    if(data.status){
+                        if(!$.isPlainObject(data.tab)){
+                            removeProgress();
+                            okAlert('备份完成!');
+                            window.onbeforeunload = function(){ return null }
+                            return;
+                        }else{
+                            rate = data.rate; // 更新进度
+                        }
+                        backup(data.tab, tab.id != data.tab.id);
+                    } else {
+                        removeProgress();
+                        errorAlert(data.msg);
+                    }
+                }, "json");
+            }
+        }();
+    </script>
+</block>

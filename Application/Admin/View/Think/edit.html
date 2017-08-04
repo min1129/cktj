@@ -1,0 +1,16 @@
+<extend name="Common@Base/base" />
+<block name="title">
+   {$meta_title}
+</block>
+<block name="content">
+    <script type="text/javascript" src="__VENDOR__/uploadify/jquery.uploadify.min.js"></script>
+    <form class="form-horizontal " action="{:_U(REAL_ACTION_NAME.'?model='.$model['name'])}" method="post">
+        <include file="Common@Block/editform"/>
+    </form>
+</block>
+<block name="js">
+    <include file="Common@Block/formjs"/>
+</block>
+
+
+

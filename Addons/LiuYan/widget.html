@@ -1,0 +1,31 @@
+<div class="row-fluid">
+    <div class="span12 contact">
+        <h1>在线留言</h1>
+        <p>您可以写上您想说的问题，我们会尽快处理</p>
+        <form action="{:addons_url('LiuYan://Liuyan/add')}" method="post" >
+            <div class="control-group">
+                <div class="controls">
+                    <input id="name" type="text" name="name" class="span5 required" data-fieldid="0">
+                </div>
+                <label class="control-label" for="name">您的名字<span class="required " style="color: red">*</span></label>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <input id="email" type="email" name="email" class="span5 required" data-fieldid="1" data-validation="email">
+                </div>
+                <label class="control-label" for="email">您的邮箱<span class="required " style="color: red">*</span></label>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input id="phone" type="text" name="phone" class="span5" data-fieldid="1">
+                </div>
+                <label class="control-label" for="email">您的电话</label>
+            </div>
+            <div class="control-group">
+                <textarea name="content" id="message" class="span7 required" data-fieldid="3" cols="45" rows="8" placeholder="写点什么.."></textarea>
+            </div>
+            <button id="submit" class="btn btn-success" type="submit" name="submit">确定</button>
+        </form>
+    </div>
+</div>

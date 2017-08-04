@@ -1,0 +1,84 @@
+<extend name="public/base"/>
+<block name="style">
+    <link href="__THEME__/css/list.css" rel="stylesheet"/>
+</block>
+<block name="content">
+    <!--main tagline area-->
+
+    <div class="row" style="margin:0; position:relative;">
+        <div class="col-md-12" style="height:120px;"></div>
+    </div>
+
+    <div class="row" style="margin:0;">
+        <div class="list_nav">
+            <div class="col-md-12">
+                <volist name="nav" id="av">
+                    <if condition="$i eq count($nav)">{$av.name}
+                        <else/>
+                        您现在的位置：<a href="{$av.url}" style="color: #000">{$av.name}</a>>
+                    </if>
+                </volist>
+            </div>
+        </div>
+    </div>
+
+    <div class="row page_content" style="margin:0;">
+        <div class="list_container clearfix bg">
+            <!--<include file="block/list_left"/>-->
+            <div class="right_con bg">
+                <div class="">
+                    <volist name="count" id="sum">
+                        性别:{$sum.sex} | 数量:{$sum.totle}
+                    </volist>
+                </div>
+
+                <notempty name="list">
+                    <table class="table tab-content table-header table-view">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>性别</th>
+                            <th>姓名</th>
+                            <th>生日</th>
+                            <th>邮箱</th>
+                            <th>手机</th>
+                            <th>头像</th>
+                        </tr>
+                        </thead>
+                        <volist name="list" id="info">
+
+                            <tbody>
+                            <tr>
+                                <td>{$info.id}</td>
+                                <td>{$info.sex}</td>
+                                <td>{$info.name}</td>
+                                <td>{$info.birthday|date='Y-m-d',###}</td>
+                                <td>{$info.email}</td>
+                                <td>{$info.phone}</td>
+                                <td><img src="{$info.head}" width="38px" height="51px"></td>
+                            </tr>
+                            </tbody>
+
+
+                        </volist>
+                    </table>
+
+                    <else/>
+                    <h1 style="text-align: center">{$tip|default='暂时还没有新闻哦~~'}</h1>
+                </notempty>
+                <div class="col-md-8 bg list_bnav">
+                    {$page}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</block>
+<!--<a href="{$info.url}">
+          <img src="{$info.cover_path|thumb=218,180}"/>
+         </a>
+         <a href="{$info.url}l">{$info.title}</a>
+         <i class="icon-calendar"></i>{$info.create_time|date='Y-m-d H:i',###} &nbsp;&nbsp;
+         <i class="icon-eye-open"></i> {$info.view}
+         <p>{$info.description|msubstr=0,120}</p>
+         <a href="{$info.url}" class="btn btn-info">详情</a>-->

@@ -1,0 +1,29 @@
+body{
+	background-color: #f2f2f2;
+}
+.con{
+	margin-bottom: 35px;
+}
+.re_list{
+	margin-top: 10px;
+}
+.re_list .title{
+	height: 35px;
+	color: #fff;
+	line-height: 35px;
+	font-size: 16px;
+}
+.re_list .conten{
+	font-size: 16px;
+	padding: 8px 15px;
+	background-color: #fff;
+	color: #595959;
+}
+.re_list .conten li{
+	list-style: none;
+	margin-top: 3px;
+}
+.re_list .conten li span:nth-child(1){
+	display: inline-block;
+	width: 110px;
+}

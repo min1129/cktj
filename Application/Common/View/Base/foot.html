@@ -1,0 +1,99 @@
+
+<script type="text/javascript" src="__VENDOR__/ace/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/typeahead-bs2.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/ace-extra.min.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="__VENDOR__/ace/js/html5shiv.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/respond.min.js"></script>
+<![endif]-->
+
+<!--[if lte IE 8]>
+<script type="text/javascript" src="__VENDOR__/ace/js/excanvas.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="__VENDOR__/ace/js/ace.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/ace-elements.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.hotkeys.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.easy-pie-chart.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/flot/jquery.flot.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/flot/jquery.flot.pie.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/bootbox.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/jquery.gritter.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/ace/js/bootstrap-wysiwyg.min.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        //判断浏览器是否支持placeholder属性
+        supportPlaceholder='placeholder'in document.createElement('input'),
+
+                placeholder=function(input){
+
+                    var text = input.attr('placeholder'),
+                            defaultValue = input.defaultValue;
+
+                    if(!defaultValue){
+
+                        input.val(text).addClass("phcolor");
+                    }
+
+                    input.focus(function(){
+
+                        if(input.val() == text){
+
+                            $(this).val("");
+                        }
+                    });
+
+
+                    input.blur(function(){
+
+                        if(input.val() == ""){
+
+                            $(this).val(text).addClass("phcolor");
+                        }
+                    });
+
+                    //输入的字符不为灰色
+                    input.keydown(function(){
+
+                        $(this).removeClass("phcolor");
+                    });
+                };
+
+        //当浏览器不支持placeholder属性时，调用placeholder函数
+        if(!supportPlaceholder){
+
+            $('input').each(function(){
+
+                text = $(this).attr("placeholder");
+
+                if($(this).attr("type") == "text"){
+
+                    placeholder($(this));
+                }
+            });
+        }
+
+    });
+    (function(){
+        var ThinkPHP = window.Think = {
+            "ROOT"   : "__ROOT__", //当前网站地址
+            "APP"    : "__APP__", //当前项目地址
+            "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+            "DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"]
+        }
+        $("#nav_top_main_bt").click(function(){
+            $("#nav_top_main").toggle(200);
+        })
+    })();
+</script>
+<script type="text/javascript" src="__VENDOR__/think.js"></script>
+<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+
+

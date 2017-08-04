@@ -1,0 +1,89 @@
+<extend name="public/base"/>
+<block name="style">
+	<link href="__THEME__/css/contentsx.css" rel="stylesheet"/>
+    <script type="text/javascript" src="__THEME__/js/contentsx.js"></script>
+</block>
+<block name="content">
+  <div class="row" style="margin:0; position:relative;">
+    <div class="col-md-12" style="height:120px;"></div>
+  </div>
+  
+  <div class="row" style="margin:0;">
+    <div class="consx_container  bg">
+      <div class=" consx_l_con bg">
+        <div class=""> <img style="margin-top:-12px;" src="__THEME__/img/content/l_con.png"/> <img src="__THEME__/img/content/l_fgx.png"/> </div>
+        <div class="">
+          <ul class="consx_con_ul">
+          <c:list who="1" name="vo" limit="0,10">
+         <li><div class="triangle-right"></div><a href="{$vo.url}">{$vo.title}</a></li>
+        </c:list>
+            <!--<li>
+              <div class="triangle-right"></div>
+              <a>资源管理专员(1名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>客服专员(3名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>专题主编(2名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>市场推广专员(1名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>电话销售(5名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>销售主管(2名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>大客户经理(1名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>绩效专员(10名)</a></li>
+            <li>
+              <div class="triangle-right"></div>
+              <a>IT系统开发工程师(3名)</a></li>-->
+          </ul>
+        </div>
+      </div>
+      <div class="consx_r_con1 bg">
+        <if condition="info.title_color eq '#555' ">
+          <h3  style="margin-bottom:14px;text-align: center">{$info.title}</h3>
+          <else/>
+          <h3 class="text-center" style="margin-bottom:20px;text-align: center;color:{$info.title_color}">{$info.title}
+          </h3>
+        </if>
+        <div class="bg">
+           <span>{$info.create_time|date='Y-m-d H:i',###}</span>&nbsp;&nbsp;&nbsp;
+           <span>浏览：{$info.view}</span>
+          </div>
+          <div class='pos_des bg'>
+            <div>
+             <span>职位名称：{$info.position}</span>
+             <span style="margin-left:270px;">月薪：{$info.salary}</span>
+            </div>
+            <div>
+             <span>生活福利：{$info.position}</span>
+             <span style="margin-left:270px;">招聘人数：{$info.number}</span>
+            </div>
+          </div>
+          <div style="margin-top:40px;">
+           <input type="button" value="投递简历"></input>
+          </div>
+      </div>
+      <div class="consx_r_con2 bg">
+        <div class="l_nav">
+         <span><a id="test">职位描述</a></span>
+         <span><a id="test2">公司介绍</a></span>
+         <span><a>申请记录</a></span>
+         <span><a>公司评价</a></span>
+        </div>
+        <div class="r_nav">
+         <p class="test" style="display:none;">{$info.position_des}</p>
+         <p class="test2" style="display:none;">test2</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</block>

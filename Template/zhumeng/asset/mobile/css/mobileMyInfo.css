@@ -1,0 +1,22 @@
+.con li{
+	list-style: none;
+	height: 55px;
+	line-height: 55px;
+	font-size: 15px;
+	/* border-bottom: 1px solid #f4ae92; */
+	color: #333;
+	margin-top: -20px;
+}
+.con li:nth-child(1){
+	height: 70px;
+	line-height: 70px;
+}
+.con li .tx{
+	width: 50px;
+	border-radius: 25px;
+	margin-top: 10px;
+	margin-right: 20px;
+}
+.con li span:nth-child(2){
+	margin-right: 20px;
+}

@@ -1,0 +1,69 @@
+<extend name="public/base"/>
+<block name="style">
+	<link href="__THEME__/css/list.css" rel="stylesheet"/>
+</block>
+<block name="content">
+  <!--main tagline area-->
+  
+  <div class="row" style="margin:0; position:relative;">
+    <div class="col-md-12" style="height:120px;"></div>
+  </div>
+  
+  <div class="row" style="margin:0;">
+    <div class="list_nav">
+    <div class="col-md-12">
+      <volist name="nav" id="av">
+        <if condition="$i eq count($nav)">{$av.name}
+          <else/>
+          您现在的位置：<a href="{$av.url}"style="color: #000">{$av.name}</a>></if>
+      </volist>
+    </div>
+    </div>
+  </div>
+  
+  <div class="row page_content" style="margin:0;">
+    <div class="list_container clearfix bg">
+        <!--<include file="block/list_left"/>-->
+     <div class="right_con bg">
+      <notempty name="list">
+       <volist name="list" id="info">
+        <present name="info.cover_path">
+        
+         <div class="rcon_info clearfix">
+          <a href="{$info.url}" style="float:left;margin-bottom: 10px;">
+           <img src="{$info.cover_path|thumb=218,180}"/>
+          </a>
+          <div class="trends_width" style="float:left;margin-left:10px;margin-top:20px;">
+          <label style="margin-top:8px;"><a href="{$info.url}l">{$info.title}</a></label>
+          <span>{$info.create_time|date='Y-m-d',###}</span>
+          <p>{$info.description|msubstr=0,120}</p>
+          <img src="__THEME__/img/content/download.png"/>&nbsp;
+          <label style="font-size:16px;">{$info.view}</label>
+          <a style="position:absolute;right:53px;color:#82b87b;font-family:'Microsoft YaHei';" href="{$info.url}">点击下载>></a>
+         </div>
+         </div>
+         
+         <else/>
+         
+         <div class="rcon_info">
+         <label><a href="{$info.url}l">{$info.title}</a></label>
+         <span>{$info.create_time|date='Y-m-d',###}</span>
+         <div class="list_description" style="position:relative;">
+          <p>{$info.description|msubstr=0,120}</p>
+          <img src="__THEME__/img/content/download.png" style="width:15px;margin-bottom:6px;"/>&nbsp;
+          <label style="font-size:16px;">{$info.view}</label>
+          <a href="{$info.url}">点击下载>></a>
+         </div>
+         </div>
+        </present>
+       </volist>
+       <else/>
+       <h1 style="text-align: center">{$tip|default='暂时还没有新闻哦~~'}</h1>
+      </notempty>
+     </div>
+      <div class="col-md-8 bg list_bnav" >
+      {$page}
+      </div>
+    </div>
+  </div>
+</block>

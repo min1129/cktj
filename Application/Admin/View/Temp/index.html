@@ -1,0 +1,62 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    模版列表
+</block>
+<block name="content">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>模版</th>
+                <th>大小</th>
+                <th>文件数</th>
+                <th>目录数</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="list">
+                <volist name="list" id="vo">
+                    <tr>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.size|format_bytes}</td>
+                        <td>{$vo.count}</td>
+                        <td>{$vo.dircount}</td>
+                        <td>
+                            <switch name="vo.status">
+                                <case value="0">
+                                    <a href="{:U('mobileUse?name='.$vo['name'])}" class="ajax-get">
+                                        启用(手机)
+                                    </a>
+                                    |
+                                    <a href="{:U('webUse?name='.$vo['name'])}" class="ajax-get">
+                                        启用(网站)
+                                    </a>
+                                </case>
+                                <case value="1">
+                                    <a href="{:U('mobileUse?name='.$vo['name'])}" class="ajax-get">
+                                        启用(手机)
+                                    </a>
+                                    |已启用(网站)
+                                </case>
+                                <case value="2">
+                                     已启用(手机)|
+                                    <a href="{:U('webUse?name='.$vo['name'])}" class="ajax-get">
+                                        启用(网站)
+                                    </a>
+                                </case>
+                                <case value="3">
+                                    已启用(手机)｜已启用(网站)
+                                </case>
+                                <default/>
+                            </switch>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="5" class="text-center"> aOh! 暂时还没有内容! </td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+</block>

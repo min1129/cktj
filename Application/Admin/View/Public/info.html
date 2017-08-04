@@ -1,0 +1,111 @@
+<!-- 标签页导航 -->
+<div class="tabbable">
+    <ul class="nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+        <volist name=":parse_config_attr($model['field_group'])" id="group">
+            <li <eq name="key" value="1">class="active"</eq>><a data-toggle="tab" href="#tab{$key}">{$group}</a></li>
+        </volist>
+    </ul>
+    <div class="tab-content no-border padding-24">
+        <!-- 表单 -->
+        <volist name=":parse_config_attr($model['field_group'])" id="group">
+            <div id="tab{$key}" class="tab-pane <eq name="key" value="1">in active</eq> tab{$key}">
+            <div class="profile-user-info profile-user-info-striped">
+                <volist name="fields[$key]" id="field">
+                    <if condition="$field['is_show'] == 1 || $field['is_show'] == 3">
+                        <div class="profile-info-row">
+                            <if condition="$field['type'] eq 'picture'">
+                                <div class="profile-info-name">
+                                    <div picture="__title__-{$field['name']}">{$field['title']}</div>
+                                </div>
+                                <else/>
+                                <div class="profile-info-name">
+                                    {$field['title']}
+                                </div>
+                            </if>
+                            <div class="profile-info-value">
+                                <switch name="field.type">
+                                    <case value="num">
+                                        {$data[$field['name']]}
+                                    </case>
+                                    <case value="string">
+                                        <div style="word-wrap: break-word;word-break:break-all;">
+                                            {$data[$field['name']]}
+                                        </div>
+                                    </case>
+                                    <case value="textarea">
+                                        <div style="word-wrap: break-word;word-break:break-all;"> {$data[$field['name']]}</div>
+                                    </case>
+                                    <case value="date">
+                                        {$data[$field['name']]|date='Y-m-d',###}
+                                    </case>
+                                    <case value="datetime">
+                                        {$data[$field['name']]|date='Y-m-d H:i',###}
+                                    </case>
+                                    <case value="date_view_4">
+                                        {$data[$field['name']]|date='Y-m-d',###}
+                                    </case>
+                                    <case value="date_3">
+                                        {$data[$field['name']]|date='Y-m',###}
+                                    </case>
+                                    <case value="bool">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <eq name="data[$field['name']]" value="$key">{$vo}</eq>
+                                        </volist>
+                                    </case>
+                                    <case value="select">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <eq name="data[$field['name']]" value="$key">{$vo}</eq>
+                                        </volist>
+                                    </case>
+                                    <case value="radio">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <eq name="data[$field['name']]" value="$key">{$vo}</eq>
+                                        </volist>
+                                    </case>
+                                    <case value="checkbox">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <label class="checkbox">
+                                                <in name="key" value="$data[$field['name']]">{$vo}</in>
+                                            </label>
+                                        </volist>
+                                    </case>
+                                    <case value="editor">
+                                        <section > {$data[$field['name']]|htmlspecialchars_decode}
+                                        </section>
+                                    </case>
+                                    <case value="picture">
+                                        <notempty name="data[$field['name']]">
+                                            <img style="max-height:200px;max-width:200px" picture="__picture__-{$field['name']}"  src="__ROOT__{$data[$field['name']]|get_cover='path'}"/>
+                                        </notempty>
+                                    </case>
+                                    <case value="file">
+                                        <present name="data[$field['name']]">
+                                            <div class="upload-pre-file"><i class="icon-paper-clip"></i><span>{$data[$field['name']]|get_table_field=###,'id','name','File'}</span>
+                                            </div>
+                                        </present>
+                                    </case>
+                                    <case value="color">
+                                        <a><span class="btn-colorpicker btn-colorpicker-{$field.name}" style="background-color:{$data[$field['name']]}"></span></a>
+                                    </case>
+                                    <case value="simpleEditor">
+                                        {$data[$field['name']]|htmlspecialchars_decode}
+                                    </case>
+                                    <case value="place">
+                                        <i class="icon-map-marker light-orange bigger-110"></i>
+    <span>
+        {$data[$field['name']]}
+    </span>
+                                    </case>
+
+                                    <default/>
+                                    {$data[$field['name']]}
+                                </switch>
+                            </div>
+                        </div>
+                    </if>
+                </volist>
+            </div>
+    </div>
+    </volist>
+</div>
+</div>

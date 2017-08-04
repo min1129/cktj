@@ -1,0 +1,61 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    模块授权
+</block>
+<block name="content">
+    <div class="table-responsive">
+        <form action="{:U('addToModule')}"  class="form-horizontal">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="center">
+                        <label>
+                            <input type="checkbox" class="ace check-all">
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+                    <th>名称</th>
+                    <th>标识</th>
+                    <th >描述</th>
+                    <th >状态</th>
+                    <th>作者</th>
+                    <th >版本</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="nodeList">
+                    <volist name="nodeList" id="node">
+                        <tr class="level" data-level="{$node['level']}">
+                            <td class="center">
+                                <label>
+                                    <if condition="in_array($node['id'],$authed_group)">
+                                        <input type="checkbox" class="ace ids" value="{$node.id}" checked="true"  name="mid[]">
+                                        <else/>
+                                        <input type="checkbox" class="ace ids" value="{$node.id}"  name="mid[]">
+                                    </if>
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+                            <td>{$node.title}</td>
+                            <td>{$node.name}</td>
+                            <td>{$node.description}</td>
+                            <td>{$node.status_text}</td>
+                            <td>{$node.author}</a></td>
+                            <td>{$node.version}</td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr><td colspan="3"><h1 class="text-center">暂无数据!</h1></td></tr>
+                </notempty>
+
+                </tbody>
+            </table>
+            <input type="hidden" value="{$this_group}" name="group_id"/>
+        </form>
+        <div class="form-group">
+            <button class="btn btn-primary btn-sm ajax-post"  type="submit"  target-form="form-horizontal">确 定</button>
+            <button class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </div>
+</block>
+

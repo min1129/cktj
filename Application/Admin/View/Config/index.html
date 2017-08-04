@@ -1,0 +1,133 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    <h1>配置管理</h1>
+</block>
+<block name="content">
+    <div>
+        <div class="btn-group">
+            <present name="Think.get.group">
+                <foreach name="group" item="vo">
+                    <eq name="group_id" value="$key">
+                        <button data-toggle="dropdown" class="btn btn-sm btn-primary dropdown-toggle">{$vo}
+                            <span class="icon-caret-down icon-on-right"></span>
+                        </button>
+                    </eq>
+                </foreach>
+                <else/>
+                <button data-toggle="dropdown" class="btn btn-sm btn-primary dropdown-toggle">全部
+                    <span class="icon-caret-down icon-on-right"></span>
+                </button>
+            </present>
+
+            <ul class="dropdown-menu dropdown-primary">
+                <present name="Think.get.group">
+                    <li>
+                    <a href="{:U('index')}" >全部</a>
+                    </li>
+                </present>
+                <foreach name="group" item="vo">
+                    <li>
+                        <neq name="group_id" value="$key">
+                            <a href="{:U('index?group='.$key)}">{$vo}</a>
+                        </neq>
+                    </li>
+                </foreach>
+            </ul>
+            <a class="btn btn-sm btn-primary" href="{:U('add')}">新 增</a>
+            <a class="btn btn-sm btn-primary" href="javascript:;">删 除</a>
+            <button class="btn btn-sm btn-primary list_sort" url="{:U('sort?group='.I('group'),'','')}">排序</button>
+        </div>
+        <!-- 高级搜索 -->
+        <div class="pull-right">
+            <span class="input-icon">
+                <input type="text" placeholder="请输入配置名称..." value="{:I('name')}" autocomplete="off" id="search">
+                <i class="ace-icon fa fa-search"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="text-center">
+                    <label>
+                        <input type="checkbox" class="ace check-all">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th>ID</th>
+                <th>名称</th>
+                <th>标题</th>
+                <th>分组</th>
+                <th>类型</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="list">
+                <volist name="list" id="config">
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                                <input class="ids ace" type="checkbox" name="id[]" value="{$config.id}">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td>{$config.id}</td>
+                        <td><a href="{:U('edit?id='.$config['id'])}">{$config.name}</a></td>
+                        <td>{$config.title}</td>
+                        <td>{$config.group|get_config_group}</td>
+                        <td>{$config.type|get_config_type}</td>
+                        <td>
+                            <a title="编辑" href="{:U('edit?id='.$config['id'])}">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$config['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="6" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+        <!-- 分页 -->
+        <div class="page">
+            {$_page}
+        </div>
+    </div>
+</block>
+
+<block name="js">
+    <script type="text/javascript">
+        $(function () {
+            //回车搜索
+            $("#search").keyup(function (e) {
+                if (e.keyCode === 13) {
+                    var url =  "{:U(CONTROLLER_NAME.'/'.ACTION_NAME.'?name=PLACEHODLE')}";
+                    var query = $('#search').val();
+                    url = url.replace('PLACEHODLE',query);
+                    window.location.href = url;
+                    return false;
+                }
+            });
+
+            //点击排序
+            $('.list_sort').click(function(){
+                var url = $(this).attr('url');
+                var ids = $('.ids:checked');
+                var param = '';
+                if(ids.length > 0){
+                    var str = new Array();
+                    ids.each(function(){
+                        str.push($(this).val());
+                    });
+                    param = str.join(',');
+                }
+
+                if(url != undefined && url != ''){
+                    window.location.href = url + '/ids/' + param;
+                }
+            });
+        });
+    </script>
+</block>

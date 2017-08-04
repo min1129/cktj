@@ -1,0 +1,23 @@
+<c:prev cur="info"/>
+<c:next cur="info"/>
+<hr/>
+<div class="blog_footer clearfix" style="margin-bottom: 20px">
+    <if condition="$prev neq $next">
+        <div style="float: left">
+            上一篇:
+            <notempty name="prev">
+                <a href="{$prev.url}" style="color: #ff8400;">{$prev.title|msubstr=0,20,true}</a>
+                <else/>
+                没有了!
+            </notempty>
+        </div>
+        <div style="float: right">
+            下一篇:
+            <notempty name="next">
+                <a href="{$next.url}" style="color: #ff8400;">{$next.title|msubstr=0,20,true}</a>
+                <else/>
+                没有了!
+            </notempty>
+        </div>
+    </if>
+</div>

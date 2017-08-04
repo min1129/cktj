@@ -1,0 +1,104 @@
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <block name="sidebar">
+            <div class="sidebar sidebar-fixed" id="sidebar">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('sidebar', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="nav nav-list">
+                    <notempty name="_extra_menu">
+                        {// 动态扩展菜单 //}
+                        {:extra_menu($_extra_menu,$__MENU__)}
+                    </notempty>
+                    <volist name="__MENU__.child" id="sub_menu">
+                        <!-- 子导航 -->
+                        <notempty name="sub_menu">
+                            <empty name="key">
+                                <volist name="sub_menu" id="menu">
+                                    <li class="{$menu.class|default=''}">
+                                        <a href="{:_U($menu['url'])}">
+                                            <span class="menu-text">{$menu.title}</span>
+                                        </a>
+                                    </li>
+                                </volist>
+                                <else/>
+                                <php>
+                                    $group_class = $__MENU__['group_class'][$key];
+                                </php>
+                                <li class="{$group_class}">
+                                    <a href="#" class="dropdown-toggle">
+                                        <span class="menu-text">{$key}</span>
+                                        <b class="arrow icon-angle-down"></b>
+                                    </a>
+                                    <ul class="submenu">
+                                        <volist name="sub_menu" id="menu">
+                                            <li class="{$menu.class|default=''}">
+                                                <a href="{:_U($menu['url'])}">{$menu.title}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </li>
+                            </empty>
+                        </notempty>
+                        <!-- /子导航 -->
+                    </volist>
+                </ul>
+                <!-- /.nav-list -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="ace-icon fa fa-angle-double-right" data-icon1="ace-icon fa fa-angle-double-left"
+                       data-icon2="ace-icon fa fa-angle-double-right"></i>
+                </div>
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('sidebar', 'collapsed')
+                    } catch (e) {
+                    }
+                </script>
+            </div>
+        </block>
+
+        <div class="main-content">
+            <!--[if lt IE 8]>
+            <div class="alert alert-block alert-danger fade in" style="margin-bottom: 0">您正在使用 <strong>过时的</strong> 浏览器. 是时候 <a target="_blank" href="http://browsehappy.com/">更换一个更好的浏览器</a> 来提升用户体验.</div>
+            <![endif]-->
+            <div class="page-content">
+                <div class="page-header">
+                    <h1 class="page-header-title">
+                        <block name="title">
+                        </block>
+                    </h1>
+                </div>
+                <!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <block name="content">
+
+                        </block>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+        </div>
+    </div>
+</div><!-- /.main-container -->
+<block name="hide">
+</block>

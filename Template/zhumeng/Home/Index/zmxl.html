@@ -1,0 +1,101 @@
+﻿<extend name="public/base"/>
+<block name='style'>
+  <link rel="stylesheet" href="__THEME__/css/zmxl.css" />
+</block>
+<block name="content">
+    <div class='xl_content'>
+     <div class='xl_width'>
+      <div>
+       <img src='__THEME__/img/content/lb.png'/>
+       <span class='fb_span'>发布您的心路</span>
+      </div>
+      
+      <div class='xl_title'>
+       <span class='fb_bt'>标题</span>
+       <input type='text' name='title' class='xltitle'/>
+      </div>
+     
+      <div class='xl_text'>
+       <textarea class='xltext'></textarea>
+      </div>
+      
+      <div class='xl_fb'>
+       <button class='xl_confirm'>发布</button>
+      </div>
+      
+      <div style='margin-top: 55px;'>
+       <img style='width: 25px;' src='__THEME__/img/content/lt.png'/>
+       <span class='fb_des'>下面这些人已经发布了他们的青锐心路</span>
+      </div>
+       <notempty name="list">
+      	<volist name='list' id='vo'>
+       		<div class='xl_block'>
+       		 <div style='display:none' class='xl_id'>{$vo.id}</div>
+       		 <div class='block_title'>{$vo.title|msubstr=0,30,"..."}</div>
+       		 <div class='block_text'>{$vo.content|msubstr=0,25,"..."}<a href="{:U('Home/Index/zmxl_more',array('id'=>$vo[id]))}" target='_blank' style='color:#ff8400'>【更多】</a></div>
+       		 <div class='time'>发布时间：{$vo.create_time|time_format}</div>
+       		 <div class='zan'>
+       		  <img style='width:22px;' src='__THEME__/img/content/bs.png'>
+       		  <span class='zan_num'>{$vo.zan|default=0}</span>
+       		 </div>
+       		</div>
+      	</volist>
+       <else/>
+        <h3 style='margin-bottom: 300px;' class="text-center"> aOh! 暂时还没有内容!</h3>
+      </notempty>
+      <div class="page" style='margin-bottom:50px;'>
+            {$_page}
+        </div>
+     </div>
+    </div>
+</block>
+
+<block name="js">
+    <script>
+    $(function(){
+    	var flag=new Array;
+    	var zan='{$zan|default=""}';
+    	if(zan!='null'){
+    		$.each($.parseJSON(zan),function(k,v){
+    			$('.xl_id').each(function(i,j){
+    				if($(j).text()==v.cid){
+    					$(j).parent().children('.zan').children('img').attr('src','__THEME__/img/content/hs.png');
+    					flag.push(v.cid);
+    				}
+    			});
+    		});
+    	}
+    	
+    	$('.xl_confirm').click(function(){
+    		if($('.xltitle').val()==''||$('.xltext').val()==''){
+    			errorAlert('填写不完整！','',1000);
+    			return false;
+    		}
+    		$.post("{:U('Home/Index/zmxl_confirm')}",{title:$('.xltitle').val(),text:$('.xltext').val()},function(data){
+        		if(data==0){
+    				errorAlert('未知错误，请重新发布！','',1000);
+    				return false;
+    			}
+        		okAlert('提交成功！','',1000);
+        		setTimeout(function(){
+					location.reload();
+				},2000);
+        	});
+    	});
+    	$('.zan').click(function(){
+    		for(var i=0;i<flag.length;i++){
+    			if(flag[i]==$(this).parent().children('.xl_id').text()){
+    				errorAlert('您已经点过赞了！','',1000);
+    				return false;
+    			}
+    		}
+    		$.post('{:U("Index/zmxl_zan")}',{id:$(this).parent().children('.xl_id').text()},function(data){
+    		});
+    		num=parseInt($(this).children('.zan_num').text())+1;
+    		$(this).children('.zan_num').html(num);
+    		$(this).children('img').attr('src','__THEME__/img/content/hs.png');
+    		flag.push($(this).parent().children('.xl_id').text());
+    	})
+    });
+    </script>
+</block>

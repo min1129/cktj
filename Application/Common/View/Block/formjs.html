@@ -1,0 +1,39 @@
+<link href="__VENDOR__/uploadify/uploadify.css" rel="stylesheet" type="text/css">
+<link href="__VENDOR__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__VENDOR__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="__VENDOR__/ueditor/ueditor.config.js" ></script>
+<script type="text/javascript" src="__VENDOR__/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="__VENDOR__/jquery.cxselect.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.date').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language:"zh-CN",
+            minView:2,
+            autoclose:true
+        });
+        $('.date_view_4').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language:"zh-CN",
+            minView:2,
+            startView:4,
+            autoclose:true
+        });
+
+        $('.date_3').datetimepicker({
+            format: 'yyyy-mm',
+            language:"zh-CN",
+            minView:3,
+            startView:4,
+            autoclose:true
+        });
+
+        $('.time').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language:"zh-CN",
+            minView:2,
+            autoclose:true
+        });
+    });
+</script>

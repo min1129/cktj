@@ -1,0 +1,459 @@
+<!-- 标签页导航 -->
+<div class="tabbable">
+    <ul class="nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+        <volist name=":parse_config_attr($model['field_group'])" id="group">
+            <li <eq name="key" value="1">class="active"</eq>><a data-toggle="tab" href="#tab{$key}">{$group}</a></li>
+        </volist>
+    </ul>
+    <div class="tab-content no-border padding-24">
+        <!-- 表单 -->
+        <volist name=":parse_config_attr($model['field_group'])" id="group">
+            <div id="tab{$key}" class="tab-pane <eq name="key" value="1">in active</eq> tab{$key}">
+            <volist name="fields[$key]" id="field">
+                <if condition="$field['is_show'] == 1 || $field['is_show'] == 3">
+                    <div class="form-group">
+                        <label class="item-label">{$field['title']}:<span class="check-tips"><notempty
+                                name="field['remark']">（{$field['remark']}）
+                        </notempty></span></label>
+
+                        <div class="controls">
+                            <switch name="field.type">
+                                <case value="num">
+                                    <input type="text" class="text input-mid" name="{$field.name}"
+                                           value="{$data[$field['name']]}">
+                                </case>
+                                <case value="string">
+                                    <input type="text" class="text input-large" name="{$field.name}"
+                                           value="{$data[$field['name']]}">
+                                </case>
+                                <case value="textarea">
+                                    <label class="textarea input-large">
+                                        <textarea name="{$field.name}">{$data[$field['name']]}</textarea>
+                                    </label>
+                                </case>
+                                <case value="date">
+                                    <input type="text" name="{$field.name}" class="text input-mid date" <if condition="$data[$field['name']] neq 0" >value="{$data[$field['name']]|date='Y-m-d',###}"</if>
+                                           placeholder="请选择日期"/>
+                                </case>
+                                <case value="date_view_4">
+                                    <input type="text" name="{$field.name}" class="text input-mid date_view_4"  <if condition="$data[$field['name']] neq 0" >value="{$data[$field['name']]|date='Y-m-d',###}"</if>  placeholder="请选择日期" />
+                                </case>
+                                <case value="date_3">
+                                    <input type="text" name="{$field.name}" class="text input-mid date_3" <if condition="$data[$field['name']] neq 0" >value="{$data[$field['name']]|date='Y-m',###}"</if> placeholder="请选择日期" />
+                                </case>
+                                <case value="datetime">
+                                    <input type="text" name="{$field.name}" class="text input-mid time" <if condition="$data[$field['name']] neq 0" >value="{$data[$field['name']]|date='Y-m-d H:i',###}"</i> placeholder="请选择时间"/>
+                                </case>
+                                <case value="bool">
+                                    <select name="{$field.name}">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <option value="{$key}"
+                                            <eq name="data[$field['name']]" value="$key">selected</eq>
+                                            >{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </case>
+                                <case value="select">
+                                    <select name="{$field.name}">
+                                        <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <option value="{$key}"
+                                            <eq name="data[$field['name']]" value="$key">selected</eq>
+                                            >{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </case>
+                                <case value="radio">
+                                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                        <label class="radio">
+                                            <input type="radio" class="ace" value="{$key}" name="{$field.name}"
+                                            <eq name="data[$field['name']]" value="$key">checked="checked"</eq>
+                                            >{$vo}
+                                        </label>
+                                    </volist>
+                                </case>
+                                <case value="checkbox">
+                                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                            <input type="checkbox" value="{$key}" class="ace"
+                                                   name="{$field.name}[]"
+                                            <in name="key" value="$data[$field['name']]">checked="checked"</in>>
+                                            <span class="lbl">{$vo}</span>
+                                    </volist>
+                                </case>
+                                <case value="editor">
+                                    <div class="controls">
+                                        <script id="{$field.name}" name="{$field.name}" type="text/plain">
+                                                      {$data[$field['name']]|htmlspecialchars_decode}
+                                        </script>
+                                    </div>
+                                    <script>
+                                        $(function(){
+                                            !function(){
+                                                var ue = UE.getEditor('{$field.name}',{
+                                                    serverUrl :"{:U('File/ueditor')}"
+                                                });
+                                            }();
+                                        })
+                                    </script>
+                                </case>
+                                <case value="picture">
+                                    <div class="controls">
+                                        <div class="upload-img-box">
+                                            <notempty name="data[$field['name']]">
+                                                <div class="upload-pre-item"><img style="max-height:200px;max-width:200px"
+                                                        src="__ROOT__{$data[$field['name']]|get_cover='path'}"/></div>
+                                            </notempty>
+                                        </div>
+                                        <input type="file" id="upload_picture_{$field.name}">
+                                        <input type="hidden" name="{$field.name}" id="cover_id_{$field.name}"
+                                               value="{$data[$field['name']]}"/>
+                                    </div>
+                                    <script type="text/javascript">
+                                        //上传图片
+                                        /* 初始化上传插件 */
+                                        $("#upload_picture_{$field.name}").uploadify({
+                                            "height": 30,
+                                            "swf": "__VENDOR__/uploadify/uploadify.swf",
+                                            "fileObjName": "download",
+                                            "buttonText": "上传图片",
+                                            "uploader": "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                                            "width": 120,
+                                            'removeTimeout': 1,
+                                            'fileTypeExts': '*.jpg; *.png; *.gif;',
+                                            "onUploadSuccess": uploadPicture{$field.name},
+                                        'onFallback':function () {
+                                            alert('未检测到兼容版本的Flash.');}}
+                                        );
+                                        function uploadPicture{$field.name}(file, data){
+                                            var data = $.parseJSON(data);
+                                            var src = '';
+                                            if (data.status) {
+                                                $("#cover_id_{$field.name}").val(data.id);
+                                                src = data.url || '__ROOT__' + data.path;
+                                                $("#cover_id_{$field.name}").parent().find('.upload-img-box').html(
+                                                        '<div class="upload-pre-item"><img style="max-height:200px;max-width:200px" src="' + src + '"/></div>'
+                                                );
+                                            } else {
+                                                errorAlert(data.msg);
+                                            }
+                                        }
+                                    </script>
+                                </case>
+                                <case value="file">
+                                    <div class="controls">
+                                        <input type="file" id="upload_file_{$field.name}">
+                                        <input type="hidden" name="{$field.name}"
+                                               value="{$data[$field['name']]}"/>
+
+                                        <div class="upload-img-box">
+
+                                            <present name="data[$field['name']]">
+                                                <div class="upload-pre-file"><i class="icon-paper-clip"></i><span>{$data[$field['name']]|get_table_field=###,'id','name','File'}</span>
+                                                </div>
+                                            </present>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        //上传文件
+                                        /* 初始化上传插件 */
+                                        $("#upload_file_{$field.name}").uploadify({
+                                            "height": 30,
+                                            "swf": "__VENDOR__/uploadify/uploadify.swf",
+                                            "fileObjName": "download",
+                                            "buttonText": "上传附件",
+                                            "uploader": "{:U('File/upload',array('session_id'=>session_id()))}",
+                                            "width": 120,
+                                            'removeTimeout': 1,
+                                            "onUploadSuccess": uploadFile{$field.name},
+                                        'onFallback':function () {
+                                            alert('未检测到兼容版本的Flash.');}});
+                                        function uploadFile{$field.name}(file, data){
+                                            var data = $.parseJSON(data);
+                                            if(data.status){
+                                                var name = "{$field.name}";
+                                                $("input[name="+name+"]").val(data.data);
+                                                $("input[name="+name+"]").parent().find('.upload-box').html(
+                                                        "<div class=\"upload-pre-file\"><i class=\"fa fa-file-word-o\"><span>" + data.msg + "</span></div>"
+                                                );
+                                            } else {
+                                                errorAlert(data.msg);
+                                            }
+                                        }
+                                    </script>
+                                </case>
+                                <case value="color">
+                                    <select id="colorpicker-{$field.name}" name="{$field.name}" class="hide" style="display: none;">
+                                        <volist name="Think.config.SYSTEM_COLOR" id="cc">
+                                            <option value="{$cc}" <eq name="data[$field['name']]" value="$cc">checked="checked"</eq>>{$cc}</option>
+                                        </volist>
+                                    </select>
+                                    <div class="dropdown dropdown-colorpicker open">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span
+                                                class="btn-colorpicker btn-colorpicker-{$field.name}" style="background-color:{$data[$field['name']]}"></span></a>
+                                        <ul class="dropdown-menu dropdown-caret">
+                                            <volist name="Think.config.SYSTEM_COLOR" id="cc">
+                                                <li><a class="colorpick-btn colorpick-btn-{$field.name}  <if condition="$data[$field['name']] eq $cc">selected</if>"  href="javascript:;" style="background-color:{$cc};"
+                                                       data-color="{$cc}"></a></li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            !function(){
+                                                $('.colorpick-btn-{$field.name}').click(function(){
+                                                    var color = $(this).data('color');
+                                                    $('.colorpick-btn-{$field.name}').removeClass('selected');
+                                                    $(this).addClass('selected');
+                                                    $('#colorpicker-{$field.name}').val(color);
+                                                    $('.btn-colorpicker-{$field.name}').css('background-color',color);
+                                                });
+                                            }();
+                                        });
+                                    </script>
+                                </case>
+                                <case value="simpleEditor">
+                                    <div class="widget-box">
+                                        <div class="widget-header widget-header-small  header-color-blue">
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-body-inner" style="display: block;">
+                                                <div class="widget-main">
+                                                    <div class="wysiwyg-editor" data-name="{$field.name}"  id="editor-{$field.name}" contenteditable="true">
+                                                        {$data[$field['name']]|htmlspecialchars_decode}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $('#editor-{$field.name}').css({'height':'200px'}).ace_wysiwyg({
+                                                toolbar_place: function(toolbar) {
+                                                    return $(this).closest('.widget-box').find('.widget-header').prepend(toolbar).children(0).addClass('inline');
+                                                },
+                                                toolbar:
+                                                        [
+                                                            'bold',
+                                                            'strikethrough',
+                                                            null,
+                                                            'insertunorderedlist',
+                                                            'insertorderedlist',
+                                                            null,
+                                                            'justifyleft',
+                                                            'justifycenter',
+                                                            'justifyright'
+                                                        ],
+                                                speech_button:false
+                                            });
+                                        });
+                                    </script>
+                                </case>
+                                <case value="place">
+                                    <div id="city_china_val" data-name="{$field.name}" class="city_field">
+                                        <select class="province cxselect" data-value="{$data[$field['name']]|str2arr=',',0}" data-first-title="选择省"></select>
+                                        <select class="city cxselect"  data-value="{$data[$field['name']]|str2arr=',',1}" data-first-title="选择市" ></select>
+                                        <select class="area cxselect" data-value="{$data[$field['name']]|str2arr=',',2}"  data-first-title="选择地区" ></select>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $.cxSelect.defaults.url = '__STATIC__/cityData.min.json';
+                                            $('#city_china').cxSelect({
+                                                selects: ['province', 'city', 'area']
+                                            });
+
+                                            $('#city_china_val').cxSelect({
+                                                selects: ['province', 'city', 'area'],
+                                                nodata: 'none'
+                                            });
+                                        });
+                                    </script>
+                                </case>
+                                <case value="point">
+                                    <input type="text" class="text" name="{$field.name}" value="{$data[$field['name']]}">
+                                    (<a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">点击拾取坐标</a>,进入拾取坐标页面,输入您的地址点击百度一下,找到地图您公司的位置点击,复制右上角的坐标即可)
+                                </case>
+                                <case value="keyword">
+                                    <div class="input-group col-xs-4"  style="padding:0">
+                                        <input class="form-control " type="text" name="{$field.name}" value="{$data[$field['name']]}"/>
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-sm keyword-{$field.name} btn-primary" type="button">
+                                                                            提取
+                                                                        </button>
+                                                                    </span>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            !function(){
+                                                $('.keyword-{$field.name}').click(function(){
+                                                    var title = $("input[name='title']").val();
+                                                    if(!title){
+                                                        errorAlert('标题不能为空!');
+                                                        return;
+                                                    }
+                                                    var des= $('#description').val();
+                                                    if(!des){
+                                                        errorAlert('描述不能为空!');
+                                                        return;
+                                                    }
+                                                    $('.keyword-{$field.name}').addClass('disabled');
+                                                    $.post("{:U('tool/getKeyword')}",{'title':title,'content':des},function(data){
+                                                        if(data.status){
+                                                            okAlert('获取成功!','',1500);
+                                                            $("input[name={$field.name}]").val(data.data);
+                                                        }else{
+                                                            errorAlert(data.msg,'',1500);
+                                                        }
+                                                        $('.keyword-{$field.name}').removeClass('disabled');
+                                                    });
+                                                });
+                                            }();
+                                        });
+                                    </script>
+
+                                </case>
+                                <case value="autoImage">
+                                    <span style="position: relative;top:-9px;margin-left: 10px">提取第</span>
+                                    <div class="ace-spinner" style="width: 70px;">
+                                        <div class="input-group">
+                                            <input type="text" class="input-mini" name="{$field.name}" value="{$data[$field['name']]}" id="{$field.name}" maxlength="2" />
+                                        </div>
+                                    </div>
+                                    <span style="position: relative;top:-9px">张图片作为封面图片</span>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            !function(){
+                                                $('#{$field.name}').blur(function(){
+                                                    var value = $(this).val();
+                                                    if(!$.isNumeric(value)){
+                                                        errorAlert('输入无效,必须是大于等于0的数字');
+                                                        $(this).focus();
+                                                    }
+                                                });
+                                            }();
+                                        });
+                                    </script>
+                                </case>
+                                <case value="autoText">
+                                    <label class="textarea input-large">
+                                        <textarea name="{$field.name}" id="{$field.name}">{$data[$field['name']]}</textarea>
+                                    </label>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            !function(){
+                                                var ue=UE.getEditor('content');
+                                                ue.addListener('blur',function(){
+                                                    var content = ue.getPlainTxt();
+                                                    $("#{$field.name}").val(content.substring(0,125));
+                                                })
+                                            }();
+                                        });
+                                    </script>
+                                </case>
+                                <case value="multiPicture">
+                                    <div class="controls">
+                                        <php>
+                                            $__IMAGES__ = json_decode(htmlspecialchars_decode($data[$field['name']]),true);
+                                        </php>
+                                        <div class="upload-img-box">
+                                            <volist name="__IMAGES__" id="image">
+                                                <div class="upload-pre-item">
+                                                    <div class="tools tools-top" data-id="{$image.id}"><a class="cover " href="javascript:;" title="设置为封面"><i class="icon-link <eq name='image.cover' value='true'>red<else/>white</eq>"></i></a><a class="del" href="javascript:;" title="删除"><i class="icon-remove red"></i></a></div>
+                                                    <img style="height:200px;width:300px" src="__ROOT__{$image.id|get_cover='path'}"/><div>
+                                                    <textarea  placeholder="请输入图片的文字说明">{$image.text}</textarea></div>
+                                                </div>
+                                            </volist>
+                                        </div>
+                                        <input type="file" id="upload_picture_{$field.name}">
+                                        <input type="hidden" name="{$field.name}" id="{$field.name}" value="{$data[$field['name']]}"/>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            var datas = multiInputDatas(true);
+                                            var cvalue = JSON.parse($("#{$field.name}").val());
+                                            for(var i=0; i<cvalue.length;i++){
+                                                datas.put(cvalue[i].id,cvalue[i]);
+                                            }
+                                            //上传图片
+                                            /* 初始化上传插件 */
+                                            $("#upload_picture_{$field.name}").uploadify({
+                                                "height"          : 30,
+                                                "swf"             : "__VENDOR__/uploadify/uploadify.swf",
+                                                "fileObjName"     : "download",
+                                                "buttonText"      : "上传图片",
+                                                "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                                                "width"           : 120,
+                                                'removeTimeout'	  : 1,
+                                                'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+                                                "onUploadSuccess" : uploadPicture{$field.name},
+                                            "onFallback" : function() {
+                                                alert('未检测到兼容版本的Flash.');
+                                            }});
+                                        eventInit();
+                                        function eventInit(){
+                                            $(".del").click(function(){
+                                                var id = $(this).parent().data('id');
+                                                console.info(id);
+                                                datas.remove(id);
+                                                $("#{$field.name}").val(datas.join());
+                                                $(this).parent().parent().detach();
+                                            });
+                                            $(".cover").click(function(){
+                                                var id = $(this).parent().data('id');
+                                                var ob = datas.get(id);
+                                                datas.setField('cover',false);
+                                                ob.cover = true;
+                                                $(".cover i").removeClass('red');
+                                                $(this).find('i').addClass('red');
+                                                $("#{$field.name}").val(datas.join());
+                                            });
+
+                                            $(".upload-pre-item ").hover(function(){
+                                                $(this).find('.tools').show();
+                                            },function(){
+                                                $(this).find('.tools').hide()
+                                            });
+                                            $(".upload-pre-item textarea").blur(function(){
+                                                var id = $(this).parent().parent().find(".tools").data('id');
+                                                var text = $(this).val();
+                                                datas.put(id,{'id':id,'text':text});
+                                                $("#{$field.name}").val(datas.join());
+                                            });
+                                        }
+                                        function uploadPicture{$field.name}(file, data){
+                                            var data = $.parseJSON(data);
+                                            var src = '';
+                                            if(data.status){
+                                                datas.put(data.id,{'id':data.id,'text':'','cover':false});
+                                                $("#{$field.name}").val(datas.join());
+                                                src = data.url || '__ROOT__' + data.path;
+                                                $("#{$field.name}").parent().find('.upload-img-box').append(
+                                                        '<div class="upload-pre-item"><div class="tools tools-top" data-id="' +data.id+ '"><a class="cover" href="javascript:;" title="设置为封面"><i class="icon-link white"></i></a><a class="del" href="javascript:;" title="删除"><i class="icon-remove red"></i></a></div><img style="height:200px;width:300px" src="' + src + '"/><div><textarea  placeholder="请输入图片的文字说明"></textarea></div></div>'
+                                                );
+                                                eventInit();
+                                            } else {
+                                                errorAlert(data.msg);
+                                            }
+                                        }
+
+                                        });
+
+                                    </script>
+                                </case>
+
+                                <default/>
+
+                                <input type="text" class="text " name="{$field.name}"
+                                       value="{$data[$field['name']]}">
+                            </switch>
+                        </div>
+                    </div>
+                </if>
+            </volist>
+    </div>
+    </volist>
+    <div class="form-group">
+        <input type="hidden" name="id" value="{$data.id}">
+        <button class="btn btn-sm btn-primary ajax-post" type="submit"  target-form="form-horizontal">确 定</button>
+        <a class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</a>
+    </div>
+</div>
+</div>

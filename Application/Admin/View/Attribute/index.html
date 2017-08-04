@@ -1,0 +1,58 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    [{:get_model_by_id($model_id)}] 属性列表
+</block>
+<block name="content">
+    <div>
+        <a class="btn btn-sm btn-primary" href="{:U('Attribute/add?model_id='.$model_id)}">新 增</a>
+    </div>
+
+    <!-- 数据列表 -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="center">
+                    <label>
+                        <input type="checkbox" class="ace check-all">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th class="">编号</th>
+                <th class="">字段</th>
+                <th class="">名称</th>
+                <th class="">数据类型</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td class="center">
+                            <label>
+                                <input type="checkbox" class="ids ace" name="id[]" value="{$vo.id}">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td>{$vo.id}</td>
+                        <td><a href="{:U('Attribute/edit?id='.$vo['id'])}">{$vo.name}</a></td>
+                        <td>{$vo.title}</td>
+                        <td><span>{:get_attribute_type($vo['type'])}</span></td>
+                        <td><a href="{:U('Attribute/edit?id='.$vo['id'])}">编辑</a>
+                            <a class="confirm ajax-get" href="{:U('Attribute/remove?id='.$vo['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="6" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+

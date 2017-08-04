@@ -1,0 +1,153 @@
+<extend name="Common@Base/base" />
+<block name="style">
+   <style>
+       .rule_check,.child_row{
+           margin:10px 0 10px 20px;
+
+       }
+       .child_row label{
+           display: inline-block;
+           margin-right: 10px;
+       }
+
+
+       .checkmod{
+           border:#ebebeb 1px solid;
+       }
+
+       .checkmod .hd{
+            background-color: #ECECEC;
+           line-height: 30px;
+           margin-bottom: 10px;
+           padding-left: 10px;
+
+       }
+       .auth_rules{
+           margin-right: 5px;
+       }
+
+   </style>
+</block>
+<block name="title">
+    访问授权
+</block>
+<block name="content">
+	<div>
+        <!-- 访问授权 -->
+            <form action="{:U('AuthManager/writeGroup')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+                <volist name="node_list" id="node" >
+                    <dl class="checkmod">
+                        <dt class="hd dd-item">
+                            <label>
+                               <input class="auth_rules rules_all ace" type="checkbox" name="rules[]" value="<?php echo $main_rules[$node['url']] ?>">
+                                <span class="lbl">{$node.title}管理</span>
+                            </label>
+                        </dt>
+                        <dd class="bd">
+                            <present name="node['child']">
+                            <volist name="node['child']" id="child" >
+                                <div class="rule_check">
+                                    <div class="dd-item">
+                                        <label>
+                                       <input class="auth_rules rules_row ace" type="checkbox" name="rules[]" value="<?php echo $auth_rules[$child['url']] ?>"/>
+
+                                            <notempty name="child['tip']">
+                                                <span class="lbl" data-rel="tooltip"  data-original-title="{$child.tip}">{$child.title}</span>
+                                            <else/>
+                                                <span class="lbl">{$child.title}</span>
+                                            </notempty>
+                                        </label>
+                                    </div>
+                                   <notempty name="child['operator']">
+                                       <div class="child_row">
+                                           <volist name="child['operator']" id="op">
+                                               <label>
+                                                   <input class="auth_rules rules_col ace" type="checkbox" name="rules[]"
+                                                   value="<?php echo $auth_rules[$op['url']] ?>"/>
+                                                   <notempty name="op['tip']">
+                                                       <span class="lbl" data-rel="tooltip"  data-original-title="{$op.tip}">{$op.title}</span>
+                                                       <else/>
+                                                       <span class="lbl">{$op.title}</span>
+                                                   </notempty>
+                                               </label>
+                                           </volist>
+                                       </div>
+                                   </notempty>
+                                </div>
+                            </volist>
+                            </present>
+                        </dd>
+                    </dl>
+                </volist>
+
+                <input type="hidden" name="id" value="{$this_group.id}" />
+                <button type="submit" class="btn btn-sm btn-primary ajax-post" target-form="auth-form">确 定</button>
+                <button class="btn btn-sm " onclick="javascript:history.back(-1);return false;">返 回</button>
+            </form>
+	</div>
+
+</block>
+<block name="js">
+<script type="text/javascript" charset="utf-8">
+    $('[data-rel=tooltip]').tooltip();
+    +function($){
+        var rules = [{$this_group.rules}];
+        $('.auth_rules').each(function(){
+            if( $.inArray( parseInt(this.value,10),rules )>-1 ){
+                $(this).prop('checked',true);
+            }
+            if(this.value==''){
+                $(this).closest('span').remove();
+            }
+        }).on('change',function(){
+            if($(this).hasClass("rules_row")){
+                if(this.checked){
+                   $(this).parents('dl').find('.rules_all').prop('checked',true);
+                }
+            }else if($(this).hasClass("rules_col")){
+                if(this.checked){
+                    $(this).parents('.rule_check').find('.rules_row').prop('checked',true);
+                    $(this).parents('dl').find('.rules_all').prop('checked',true);
+                }
+            }
+        });
+
+        //全选节点
+        $('.rules_all').on('change',function(){
+            $(this).closest('dl').find('dd').find('input').prop('checked',this.checked);
+        });
+        $('.rules_row').on('change',function(){
+            $(this).closest('.rule_check').find('.child_row').find('input').prop('checked',this.checked);
+        });
+
+
+
+        $('.checkbox').each(function(){
+            $(this).qtip({
+                content: {
+                    text: $(this).attr('title'),
+                    title: $(this).text()
+                },
+                position: {
+                    my: 'bottom center',
+                    at: 'top center',
+                    target: $(this)
+                },
+                style: {
+                    classes: 'qtip-dark',
+                    tip: {
+                        corner: true,
+                        mimic: false,
+                        width: 10,
+                        height: 10
+                    }
+                }
+            });
+        });
+
+        $('select[name=group]').change(function(){
+			location.href = this.value;
+        });
+    }(jQuery);
+</script>
+</block>

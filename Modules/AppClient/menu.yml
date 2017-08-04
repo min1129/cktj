@@ -1,0 +1,18 @@
+---
+平台:
+  - title: app管理
+    url: index/index
+    children:
+      - title: 添加客户端
+        url: index/add
+      - title: 编辑客户端
+        url: index/edit
+  - title: 推送平台
+    url: appNotice/index
+    children:
+      - title: 添加
+        url: appNotice/add
+      - title: 编辑
+        url: appNotice/edit
+
+

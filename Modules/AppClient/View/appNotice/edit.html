@@ -1,0 +1,30 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    新建推送
+</block>
+<block name="content">
+    <form action="{:_U(add)}" method="post" class="form-horizontal normal-form">
+        <div class="form-group">
+            <label>推送标题<span class="check-tips">（用户名会作为默认的昵称）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$info.title}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label >推送内容<span class="check-tips"></span></label>
+            <div class="controls">
+                <textarea name="content">{$info.content}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label >附加数据:<span class="check-tips">(例子: @1 用户点击推送后会跳到id为1的公司详情页面, $1用户点击推送后会跳到id为1的招聘详情页面, &1 用户点击推送后会跳到id为1的公告详情页面，如果是外部链接，请填写完整的url,例如:http://www.baidu.com)</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="extra" value="{$info.extra}">
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-sm btn-primary ajax-post"  type="submit" target-form="form-horizontal">立即发送</button>
+            <button class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>

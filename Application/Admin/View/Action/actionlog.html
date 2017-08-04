@@ -1,0 +1,58 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    行为日志
+</block>
+<block name="content">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-primary ajax-get confirm" url="{:U('clear')}">清 空</button>
+		<button class="btn btn-sm btn-primary ajax-post confirm" target-form="ids" url="{:U('del')}">删 除</button>
+    </div>
+	<!-- 数据列表 -->
+	<div class="table-responsive">
+	<table class="table table-striped table-bordered table-hove">
+    <thead>
+        <tr>
+		<th class="text-center">
+            <label>
+            <input class="check-all ace" type="checkbox"/>
+                <span class="lbl"></span>
+              </label>
+        </th>
+		<th>编号</th>
+		<th>行为名称</th>
+		<th>执行者</th>
+		<th>执行时间</th>
+		<th>操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<notempty name="_list">
+		<volist name="_list" id="vo">
+		<tr>
+            <td class="text-center">
+                <label>
+                    <input class="ace ids" type="checkbox" name="ids[]" value="{$vo.id}" />
+                    <span class="lbl"></span>
+                </label>
+            </td>
+			<td>{$vo.id} </td>
+			<td>{:get_action($vo['action_id'],'title')}</td>
+			<td>{:get_nickname($vo['user_id'])}</td>
+			<td><span>{$vo.create_time|time_format}</span></td>
+			<td><a href="{:U('Action/edit?id='.$vo['id'])}">详细</a>
+				<a class="confirm ajax-get" href="{:U('Action/del?ids='.$vo['id'])}">删除</a>
+                </td>
+		</tr>
+		</volist>
+		<else/>
+		<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+	</div>
+	<!-- 分页 -->
+	<div class="page">{$_page}</div>
+	<!-- /分页 -->
+
+</block>
+

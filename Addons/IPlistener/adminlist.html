@@ -1,0 +1,74 @@
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>序号</th>
+			<volist name="listKey" id="vo">
+				<th>{$vo}</th>
+			</volist>
+			 <th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="_list" id="lv" key="vo">
+		<tr>
+			<td>{$lv.id}</td>
+			<volist name="listKey" id="lk" >
+				<td>
+					<switch name="key" >
+<case value="ip">{$lv.$key}</case>
+<case value="visit_time"> {$lv.$key|date="Y-m-d h:m:s",###}</case>
+<case value="visit_url">{$lv.$key} </case>
+<case value="city">{$lv.$key}</case>
+<case value="isp">{$lv.$key}</case>
+
+</switch>
+
+
+
+					</td>
+			</volist>
+			<td>
+				 <a class="update" href="javascript:;" data-id="{$lv.id}">删除</a>
+			</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+<script type="text/javascript">
+	 var ajaxUrl = "{:addons_url('IPlistener://IPlistener/deleIp')}";
+
+	$(function(){
+		$('a.update').click(function(){
+
+
+
+
+			var id = $(this).data('id'); //data() 获得被选元素的 data-id数据
+
+			//alert(ajaxUrl);
+			//alert(inputs[2].value);
+
+
+			 //执行ajax请求
+            $.ajax({
+                type: "POST",
+                url: ajaxUrl,
+                 data: "id="+id,
+                success: function(msg){
+
+					alert(msg);
+					window.location.reload();
+
+
+                },
+                error: function(){
+                    alert("服务器异步请求失败");
+
+                }
+            });
+
+
+
+		});
+	})
+</script>

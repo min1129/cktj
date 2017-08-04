@@ -1,0 +1,32 @@
+<extend name="public/base"/>
+
+<block name="content">
+    <!--main tagline area-->
+    <section class="taglineWrap">
+        <div class="container">
+            <div class="row-fluid  tagline">
+                <div class="breadcrumbs">
+                    <div class="container" style="font-size: 16px;">
+                        <volist name="nav" id="av">
+                            <if condition="$i eq count($nav)">
+                                {$av.name}
+                                <else/>
+                                <a href="{$av.url}" style="color: #49afcd">{$av.name}</a>/
+                            </if>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /container -->
+    </section>
+    <section class="mainContentWrap">
+        <div class="container mainContent">
+            <!--{:plugin('LiuYan')}-->
+
+        </div>
+    </section>
+</block>
+
+
+

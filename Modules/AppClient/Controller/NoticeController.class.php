@@ -1,0 +1,56 @@
+<?php
+namespace Modules\AppClient\Controller;
+use Common\Controller\ModuleController;
+use Think\Controller;
+use Think\Page;
+
+/**
+ * app通知
+ * Class IndexController
+ * @package Modules\AppClient\Controller
+ * @author
+ * @time
+ */
+class NoticeController extends ModuleController {
+    public function  index(){
+        MK();
+        $map  = array('status' => array('gt',-1));
+        $list = $this->p_lists('AppClient',$map,'create_time desc');
+        for($i=0;$i<count($list);$i++){
+            $file = M('File')->where(array('status'=>1))->getById($list[$i]['file']);
+            $list[$i]['size'] = round(($file['size']/(1024*1024)) ,2)." MB";
+        }
+        $this->assign('list', $list);
+        $this->meta_title = '客户端列表';
+        $this->_display();
+    }
+
+    /**
+     * 删除数据
+     */
+    public function  del(){
+        parent::editRow('AppClient',array('status'=>-1));
+    }
+
+    /**
+     * 添加或者修改
+     */
+    public function  add(){
+        if(IS_POST){
+            parent::add('app_client');
+        }else{
+            parent::add('app_client',"添加客户端");
+        }
+    }
+
+    public function edit(){
+        if(IS_POST){
+            $id = I('post.id');
+            parent::edit('app_client',$id);
+        }else{
+            $name = I('get.name');
+            $id = I('get.id');
+            parent::edit('app_client',$id,$name.'[修改]');
+        }
+    }
+}

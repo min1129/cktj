@@ -1,0 +1,41 @@
+<!-- 底部按钮开始 -->
+<div class="btm_btn">
+	<switch name='btm_btn'>
+		<case value='1'>
+			<li style='background:url("__THEME__/mobile/images/1coin.png") no-repeat 50% 78%;background-size:70px 70px;'><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Home/Index/index")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Common/noticeCenter")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Student/index")}'></a></li>
+		</case>
+		<case value='2'>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Home/Index/index")}'></a></li>
+			<li style='background:url("__THEME__/mobile/images/2coin.png") no-repeat 50% 78%;background-size:70px 70px;'><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Common/noticeCenter")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Student/index")}'></a></li>
+		</case>
+		<case value='3'>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Home/Index/index")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Common/noticeCenter")}'></a></li>
+			<li style='background:url("__THEME__/mobile/images/3coin.png") no-repeat 50% 78%;background-size:70px 70px;'><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Student/index")}'></a></li>
+		</case>
+		<default/>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Home/Index/index")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Common/noticeCenter")}'></a></li>
+			<li><a style='width: 100%; height: inherit; display: inline-block;' href='{:_U("Person/Student/index")}'></a></li>
+	</switch>
+</div>
+<!-- 底部按钮结束 -->
+<script>
+var ua = window.navigator.userAgent.toLowerCase();
+if(ua.match(/MicroMessenger/i) != 'micromessenger'){
+	$('.body_top,.td_btn,.btm_btn,.link').hide();
+}
+var conHeight=$('.con').height()+50;
+var Height=window.screen.height;
+if(conHeight>=Height){
+	$('.con').css('min-height','650px');
+}
+$('.con,.con_container,.con_r_con').css('margin-bottom','50px');
+</script>
+<!-- <script type="text/javascript" src="__THEME__/mobile/js/jquery.min.js"></script>
+<script type="text/javascript" src="__THEME__/mobile/js/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="__THEME__/vendor/jquery.gritter.min.js"></script>
+<script type="text/javascript" src="__THEME__/vendor/common.js"></script>

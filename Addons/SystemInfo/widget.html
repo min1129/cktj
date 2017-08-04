@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-xs-6">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="smaller">产品信息</h4>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 程序版本</div>
+                            <div class="profile-info-value">
+                                <span>{$Think.JDICMS_VERSION}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务器操作系统</div>
+                            <div class="profile-info-value">
+                                <span>{$Think.const.PHP_OS}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> ThinkPHP版本</div>
+                            <div class="profile-info-value">
+                                <span>{$Think.VERSION}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 物理路径</div>
+                            <div class="profile-info-value">
+                                <span>{:dirname(THINK_PATH)}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> MYSQL版本</div>
+                            <div class="profile-info-value">
+                         <span>
+                     <php>
+                         $system_info_mysql = M()->query("select version() as v;");
+                     </php>
+                      {$system_info_mysql.0.v}
+                        </span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 上传限制</div>
+                            <div class="profile-info-value">
+                                <span>{:ini_get('upload_max_filesize')}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="smaller">开发团队</h4>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 产品团队</div>
+
+                            <div class="profile-info-value">
+                                <span>天津时代科技有限公司</span>
+                            </div>
+                        </div>
+                        <!-- <div class="profile-info-row">
+                            <div class="profile-info-name"> 技术支持 </div>
+
+                            <div class="profile-info-value">
+                                <span>tiptimes</span>
+                            </div>
+                        </div> -->
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 联系方式 </div>
+
+                            <div class="profile-info-value">
+                                <span>022-83951155/66/77/88</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 官网 </div>
+
+                            <div class="profile-info-value">
+                                <span><a href='http://www.tiptimes.com' target='_blank'>www.tiptimes.com</a></span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 邮箱</div>
+
+                            <div class="profile-info-value">
+                                <span>tiptimes@tiptimes.com</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> qq</div>
+
+                            <div class="profile-info-value">
+                                <span>769976611/22/33</span>
+                            </div>
+                        </div>
+						<div class="profile-info-row">
+                            <div class="profile-info-name"> 地址</div>
+
+                            <div class="profile-info-value">
+                                <span>天津市南开区华苑产业园榕苑路15号鑫茂科技园7号楼A座3层</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

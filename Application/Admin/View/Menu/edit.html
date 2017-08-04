@@ -1,0 +1,89 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    {:isset($info['id'])?'编辑':'新增'}后台菜单
+</block>
+<block name="content">
+    <form action="{:U()}" method="post" class="form-horizontal normal-form" >
+        <div class="form-group">
+            <label>标题<span class="check-tips">（用于后台显示的配置标题）</span></label>
+            <div>
+                <input type="text" class="text input-large" name="title" value="{$info.title|default=''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>排序<span class="check-tips">（用于分组显示的顺序）</span></label>
+            <div >
+                <input type="text" class="text input-small" name="sort" value="{$info.sort|default=0}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>链接<span class="check-tips">（U函数解析的URL或者外链,主:如果是主菜单下有二级菜单,请添Public/index代表动态菜单）</span></label>
+            <div>
+                <input type="text" class="text input-large" name="url" value="{$info.url|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>上级菜单<span class="check-tips">（所属的上级菜单）</span></label>
+            <div >
+                <select name="pid">
+                    <volist name="Menus" id="menu">
+                        <option value="{$menu.id}">{$menu.title_show}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  >分组<span class="check-tips">（用于左侧分组二级菜单）</span></label>
+            <div>
+                <input type="text" class="text input-large" name="group" value="{$info.group|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>是否隐藏<span class="check-tips"></span></label>
+            <div class="radio">
+                <label>
+                    <input name="hide" type="radio" class="ace" value="1">
+                    <span class="lbl">是</span>
+                </label>
+                <label>
+                    <input name="hide" type="radio" class="ace" value="0">
+                    <span class="lbl">否</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  >仅开发者模式可见<span class="check-tips"></span></label>
+            <div class="radio">
+                <label>
+                    <input name="is_dev" type="radio" class="ace" value="1">
+                    <span class="lbl">是</span>
+                </label>
+                <label>
+                    <input name="is_dev" type="radio" class="ace" value="0">
+                    <span class="lbl">否</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  >说明<span class="check-tips">（菜单详细说明）</span></label>
+            <div>
+                <input type="text" class="text input-large" name="tip" value="{$info.tip|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn btn-primary btn-sm ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+<block name="js">
+    <script type="text/javascript">
+        Think.setValue("pid", {$info.pid|default = 0});
+        Think.setValue("hide", {$info.hide|default = 0});
+        Think.setValue("is_dev", {$info.is_dev|default = 0});
+    </script>
+</block>

@@ -1,0 +1,62 @@
+
+<div class="navbar navbar-default navbar-fixed-top">
+<script type="text/javascript">
+    try {
+        ace.settings.check('navbar', 'fixed')
+    } catch (e) {
+    }
+</script>
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" id="nav_top_main_bt" data-toggle="collapse" data-target="nav_top_main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse" id="nav_top_main">
+        <ul class="nav navbar-nav">
+
+            <li class="menu_hide" style="background-color: #fff;height:2px"></li>
+            <!--<li><a href="{:U('Home/Index/index')}" target="_blank" class="jdi-brand">{$Think.config.ADMIN_WEB_TITLE}</a></li>-->
+            <li ><a  href="{:U('Index/index')}" class="{$__INDEXCLASS__|default=''}">首页</a></li>
+            <volist name="__MENU__.main" id="menu">
+                <eq name="menu.hide" value="0">
+                    <li ><a  class="{$menu.class|default=''}" href="{:U($menu['url'])}">{$menu.title}</a></li>
+                </eq>
+            </volist>
+
+        </ul>
+        <ul class="user_menu_ul nav navbar-nav navbar-right ">
+            <li >
+                <a data-toggle="dropdown" style="line-height: 13px" href="#" class="dropdown-toggle">
+                    <i class="fa fa-user" style="line-height: 13px;font-size: 23px"></i>
+                </a>
+                <ul class="user-menu  dropdown-menu">
+                    <li>
+                        <span>您好:{:session('user_auth.nickname')}</span>
+                    </li>
+                    <li class="menu_hide menu_hide2">
+                        <a href="{:U('Index/updatePassword')}">
+                            修改密码
+                        </a>
+                    </li>
+                    <li class="menu_hide menu_hide2">
+                        <a href="{:U('Index/updateNickname')}">
+                            修改昵称
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:U('Public/logout')}">
+                            退出
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /.ace-nav -->
+</div>
+

@@ -1,0 +1,14 @@
+<div class="con_l_con bg">
+    <div class=""> 
+     <img style="margin-top:-12px; margin-left:-2px;" src="__THEME__/img/content/l_con.png"/> 
+     <span style="color:white; font-family:'Microsoft YaHei';font-size:16px;display:inline-block; position:absolute; left:105px;top:30px;">最新招聘职位</span>
+     <img src="__THEME__/img/content/l_fgx.png"/> 
+    </div>
+    <div class="">
+        <ul class="l_con_ul">
+            <volist name=":hostRec()"  id="vo" >
+                <li><i class=" icon-angle-right"></i>&nbsp; <a href="{:U('Zm/Recruitment/detail?id='.$vo['id'])}">{$vo.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+</div>

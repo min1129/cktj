@@ -1,0 +1,70 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    数据备份
+</block>
+<block name="content">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th width="200">备份名称</th>
+                    <th width="80">卷数</th>
+                    <th width="80">压缩</th>
+                    <th width="80">数据大小</th>
+                    <th width="200">备份时间</th>
+                    <th width="120">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="data">
+                    <tr>
+                        <td>{$data.time|date='Ymd-His',###}</td>
+                        <td>{$data.part}</td>
+                        <td>{$data.compress}</td>
+                        <td>{$data.size|format_bytes}</td>
+                        <td>{$key}</td>
+                        <td>
+                            <a class="db-import" href="{:U('import?time='.$data['time'])}">还原</a>&nbsp;
+                            <a class="ajax-get confirm" href="{:U('del?time='.$data['time'])}">删除</a>
+                            <a href="{:_U('download',array('name'=>$data['name']))}">下载</a>
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+    <!-- /应用列表 -->
+</block>
+
+<block name="js">
+    <script type="text/javascript">
+        $(".db-import").click(function(){
+            var self = this;
+            $.get(self.href, success, "json");
+            showProgress('正在还原数据库!请不要关闭此页面',0);
+            window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+            return false;
+        
+            function success(data){
+                if(data.status){
+                    if(data.gz){
+                        changeProgress(0,data.msg);
+                    }
+                    if(data.part){
+                        $.get(self.href, 
+                            {"part" : data.part, "start" : data.start}, 
+                            success, 
+                            "json"
+                        );
+                    }  else {
+                        removeProgress();
+                        okAlert(data.msg);
+                        window.onbeforeunload = function(){ return null; }
+                    }
+                } else {
+                    errorAlert(data.msg);
+                }
+            }
+        });
+    </script>
+</block>

@@ -1,0 +1,281 @@
+/*.bg
+{
+	border:1px solid #000;
+}*/
+/*body
+{
+	background: url(../img/content/con_bg.png);
+}*/
+.list_nav
+{
+    height:22px;
+    position:relative;
+    margin:0 auto;
+    width: 860px;
+    z-index:9;
+}
+.list_nav div
+{
+    position:absolute;
+    width:220px;
+    right:0;
+    font-family:"Microsoft YaHei";
+    font-size:14px;
+    font-weight:bold;
+    /*top:110px;*/
+}
+.list_container {
+  width: 830px;
+  margin: 0 auto;
+  position: relative;
+  /* min-height: 410px; */
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); */
+  background: #fff;
+  margin-bottom: 20px;
+  z-index:9;
+  border: 1px solid #ccc;
+}
+/*.list_container
+{
+    width: 1080px;
+    margin:0 auto;
+    position:relative;
+    min-height:410px;
+}*/
+.left_con
+{
+    /*position:relative;*/
+    min-height:400px;
+    background-color:#82b87b;
+    width: 250px;
+    padding-right: 10px;
+    padding-left: 20px;
+    float:left;
+}
+.triangle-right
+{
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-left: 6px solid #000;
+    border-bottom: 3px solid transparent;
+
+    width:4px;
+    float:left;
+    margin-top:6px;
+    padding-right:10px;
+}
+.l_con_ul
+{
+    margin-top:20px;
+    margin-left: -27px;
+}
+.l_con_ul li
+{
+    padding-top: 5px;
+    list-style: none;
+
+}
+/*#triangle-right {
+    width: 0;
+    height: 0;
+    border-top: 2px solid transparent;
+    border-left: 5px solid red;
+    border-bottom: 2px solid transparent;
+}*/
+.l_con_ul li a
+{
+    color:#fff;
+    font-family:"Microsoft YaHei";
+    cursor:pointer;
+}
+.right_con
+{
+    /*position:absolute;*/
+
+   /* border-top:1px solid #000;*/
+    margin-left:42px;
+    padding-right: 12px;
+    padding-left: 12px;
+    float:left;
+    width: 750px;
+}
+.rcon_info
+{
+    padding-top:15px;
+    border-bottom: 1px solid #ccc;
+}
+.rcon_info span
+{
+    position:absolute;
+    right: 53px;
+    margin-top:8px;
+}
+.rcon_info label a
+{
+    font-family:"Microsoft YaHei";
+    font-size:18px;
+    color:#ff8400;
+}
+.list_description a
+{
+    position:absolute;
+    right:0px;
+    font-family:"Microsoft YaHei";
+    color:#ff8400;
+}
+.rcon_info div p
+{
+    font-family:"Microsoft YaHei";
+}
+.list_bnav
+{
+    position:relative;
+    font-family:"Microsoft YaHei";
+    font-size:10px;
+    height:40px;
+    margin-top:20px;
+    width:90%;
+}
+.pagination
+{
+    margin:0;
+}
+.pagination>.active>a
+{
+    background-color:#ff8400;
+    border-color:#ff8400;
+}
+.pagination>.active>a:hover
+{
+    background-color:#ff8400;
+    border-color:#ff8400;
+}
+.pagination>li>a
+{
+    color:#ff8400;
+}
+.list_bnav span
+{
+    margin-left:-5px;
+}
+.bnav_l
+{
+    position:absolute;
+    left:20px;
+    width:180px;
+}
+.bnav_r
+{
+    position:absolute;
+    right:10px;
+}
+.zx_block {
+  width: 380px;
+  height: 380px;
+  margin-top: 12px;
+  float: left;
+  margin-left: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  cursor:pointer;
+}
+.bg4
+{
+	box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.5); 
+}
+.zx_title
+{
+	padding: 30px 0px 0px 0px;
+	text-align:center;
+	border-bottom: 1px solid #eee;
+}
+.zx_title label a
+{
+	font-size:30px;	
+	color:#82b87b;
+	cursor:pointer;
+}
+.zx_con
+{
+	height: 295px;
+	position:relative;
+	padding: 0px 5px 0px 5px;
+}
+.zx_con p
+{
+    padding: 20px 20px 10px 20px;
+    font-size: 18px;
+}
+.block_footer
+{
+  position: absolute;
+  bottom: 0px;
+  right: 15px;
+}
+.trends_width
+{
+	width:495px;
+}
+@media (max-width: 500px)
+{
+	.trends_width
+{
+	width:100%;
+}
+	.left_con
+	{
+	  display:none;
+	}
+.list_nav {
+  height: 22px;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+.list_container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.right_con
+	{
+	width: 100%;
+		margin-left:0px;
+	}
+.rcon_info span {
+  display:none;
+}
+.list_bnav 
+	{
+		margin-top:20px;
+	   margin-left:0;
+	    position:absolute;
+	   bottom:-52px;
+	  
+	}
+	.list_bnav .rows
+	{
+		display:none;
+	}
+	.zx_block 
+	{
+	 width:100%;
+	 margin-left:0;
+	 height:450px;
+	 
+	 }
+	 .zx_con
+	 {
+		 height:370px;
+	}
+	.zx_title label a {
+  font-size: 23px;
+  color: #82b87b;
+  cursor: pointer;
+}
+.img_width
+{
+	width:275px;
+}
+}

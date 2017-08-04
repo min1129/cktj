@@ -1,0 +1,71 @@
+<script>
+	//设置cookie 第三个参数表示 多少秒钟后过期
+        function setCookie(name, value,time){
+            var seconds = time;
+            var exp = new Date();
+            //exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+			exp.setTime(exp.getTime() + seconds    * 1000);
+			
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        }
+        
+        //读取cookies 
+        function getCookie(name){
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            
+            if (arr = document.cookie.match(reg)) 
+            
+                return unescape(arr[2]);
+            else 
+                return null;
+        }
+        
+	var ipurl = "{:addons_url('IPlistener://IPlistener/updateIp')}"; 
+	
+	$(document).ready(function(){
+  // 在这里写你的代码...
+  //先读取。没有的就发送ajax请求。有则忽略。
+  //cookie半小时过期。半小时之内的不重复计算
+  var isIp = getCookie('isIp');
+  
+  var iptime = '{$addons_iplistener_config.iptime}';//记录的间隔
+  
+  if(isIp ==1){
+  	//已经记录过。
+	
+	
+  }else{
+  	//不存在，则计入统计
+	
+	$.ajax({
+                type: "POST",
+                url: ipurl,
+                 data: "ip="+window.location.href,
+                success: function(msg){
+					//ajax成功。
+					//根据返回值设置cookie
+					if(msg =='成功记录'){
+						setCookie('isIp',1,parseInt(iptime));
+						
+					}
+					
+				},
+				error:function(){
+					//alert('ajax请求失败');
+					//alert(ipurl);
+					
+					//cookie不设置
+				}
+				});
+	
+  	
+  }
+  
+});
+	
+	
+</script>
+ 
+
+
+<!--IP监听的js结束-->

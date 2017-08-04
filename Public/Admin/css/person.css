@@ -1,0 +1,10 @@
+#sidebar-nav,#person-content{
+    padding:0;
+}
+
+#sidebar-nav .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+    background-color:#717984;
+}
+#sidebar-nav .list-group-item.active a{
+    color: #ffffff;
+}

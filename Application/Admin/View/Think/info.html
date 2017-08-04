@@ -1,0 +1,23 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    {$meta_title}{$_extend}
+</block>
+<block name="content">
+     <include file="Common@Block/info"/>
+</block>
+<block name="js">
+    <script type="text/javascript">
+        window.onload=function(){ //让图片说明文字居中
+            $("[picture^='__title__']").each(function(){
+                var tp = $(this).attr('picture');
+                var pp  = tp.replace('__title__','__picture__');
+                var height = $("[picture="+pp+"]").css('height');
+                $(this).css('line-height',height);
+            });
+        }
+        $('[data-rel=tooltip]').tooltip();
+    </script>
+</block>
+
+
+

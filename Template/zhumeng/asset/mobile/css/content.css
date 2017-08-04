@@ -1,0 +1,149 @@
+/*.bg
+{
+	border:1px solid #000;
+}*/
+/*body
+{
+	background: url(../img/content/con_bg.png);
+}*/
+/*.con_container
+{
+    width: 1080px;
+    margin:0 auto;
+    position:relative;
+}*/
+.con_container {
+  width: 820px;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  background: #fff;
+    margin-bottom: 20px;
+    z-index:9;
+}
+.content-wrap{
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-top: 10px;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.con_l_con
+{
+    /*position:absolute;*/
+    min-height:400px;
+    background-color:#82b87b;
+    /*margin-top:70px;*/
+    margin-bottom:40px;
+    width: 250px;
+    padding-left: 20px;
+    padding-right:10px;
+    float:left;
+}
+.l_con_ul
+{
+    margin-top:20px;
+    margin-left: -27px;
+}
+.l_con_ul li
+{
+    padding-top: 5px;
+    /*list-style: square;*/
+
+}
+.l_con_ul li a
+{
+    color:#fff;
+    font-family:"Microsoft YaHei";
+    cursor:pointer;
+}
+
+.con_r_con
+{
+    margin-left:70px;
+    /*border-top:1px solid #000;*/
+    width:695px;
+    padding-left:12px;
+    padding-right:12px;
+    float:left;
+}
+.con_r_con h3
+{
+    font-family:"Microsoft YaHei";
+}
+.triangle-right
+{
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-left: 6px solid #000;
+    border-bottom: 3px solid transparent;
+
+    width:4px;
+    float:left;
+    margin-top:6px;
+    padding-right:10px;
+}
+.list_nav
+{
+    height:22px;
+    position:relative;
+    margin:0 auto;
+    width: 850px;
+    z-index:9;
+}
+.list_nav div
+{
+    position:absolute;
+    width:220px;
+    right:0;
+    font-family:"Microsoft YaHei";
+    font-size:14px;
+    font-weight:bold;
+    /*top:110px;*/
+}
+.nav_btm
+{
+	font-family:'Microsoft YaHei'; 
+	float:left;
+	margin-left: 70px;
+	 width:670px;
+}
+@media (max-width: 500px)
+{
+	.con_container 
+	{
+	width:100%;
+	}
+	.list_nav 
+	{
+	  width:100%;
+	}
+	.con_l_con
+	{
+      display:none;
+	}
+.con_r_con {
+  margin-left: 0px;
+  
+   width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  float: left;
+}
+.nav_btm
+	{
+	margin-left:0px;
+	 width:100%;
+	}
+	.blog_footer div
+	{
+	  float:left;
+		width:100%;
+	}
+	.jiathis_style
+	{
+	  width:100%;
+	}
+}

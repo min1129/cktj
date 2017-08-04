@@ -1,0 +1,192 @@
+<extend name="Common@Base/base"/>
+
+<block name="title">
+    <if condition="ACTION_NAME eq 'add'">新增<else/>编辑</if>模型
+</block>
+<block name="content">
+<div class="tabbable">
+    <ul class="nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+        <li class="active"><a data-toggle="tab"  href="#tab1">基 础</a></li>
+        <li ><a data-toggle="tab"  href="#tab2">设 计</a></li>
+        <li ><a data-toggle="tab"  href="#tab3">高 级</a></li>
+    </ul>
+    <form  action="{:U('update')}"  class="form-horizontal">
+    <div class="tab-content no-border padding-24">
+            <div id="tab1" class="tab-pane in active">
+                <div class="form-group">
+                    <label class="item-label">父模型<span class="check-tips">{$info.pid|get_model_by_id}</span></label>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">模型标识<span class="check-tips">（请输入文档模型标识）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text " name="name" value="{$info.name}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">模型名称<span class="check-tips">（请输入模型的名称）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text " name="title" value="{$info.title}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">模型组别<span class="check-tips">（模型组别）</span></label>
+                    <div class="controls">
+                        <select name="type">
+                            <volist name="types" id="t">
+                                <if condition="$key eq $info['type']">
+                                    <option value="{$key}" selected>{$t}</option>
+                                    <else/>
+                                    <option value="{$key}">{$t}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="tab2" class="tab-pane">
+                <div class="form-group">
+                        <div>
+                            <label class="item-label">字段管理<span class="check-tips">(有字段才会创建数据表)</span></label>
+                        </div>
+                        <div class="widget-box col-xs-3">
+                            <div class="widget-header widget-header-flat">
+                                <h5>字段列表</h5>
+                                <div class="widget-toolbar">
+                                    <a href="{:U('Attribute/add?model_id='.$info['id'])}" target="_balnk">新增</a>
+                                    <a href="{:U('Attribute/index?model_id='.$info['id'])}" target="_balnk">管理</a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main form_field_sort">
+                                    <ul>
+                                        <foreach name="fields" item="field" key="k">
+                                            <li >
+                                                <label>
+                                                    <a href="{:U('Attribute/edit?id='.$field['id'])}" target="_blank">{$field['title']} [{$field['name']}]</a>
+                                                </label>
+                                            </li>
+                                        </foreach>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">字段别名定义<span class="check-tips">（用于表单显示的名称）</span></label>
+                    <div class="controls">
+                        <label class="textarea input-large">
+                            <textarea name="attribute_alias">{$info.attribute_alias}</textarea>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">表单显示分组<span class="check-tips">（用于表单显示的分组，以及设置该模型表单排序的显示）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="field_group" value="{$info.field_group}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label class="item-label">表单显示排序<span class="check-tips">（直接拖动进行排序）</span></label>
+                    </div>
+                    <volist name=":parse_field_attr($info['field_group'])" id="vo">
+                        <div class="widget-box col-xs-3">
+                            <div class="widget-header widget-header-flat">
+                                <h5>{$vo}</h5>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main  form_field_sort">
+                                    <ul class="dragsort needdragsort" data-group="{$key}">
+                                        <foreach name="fields" item="field" key="k">
+                                            <if condition="(($field['group'] eq $key) or($i eq 1 and !isset($field['group']))) and ($field['is_show'] neq 0)">
+                                                <li class="getSort">
+                                                    <em data="{$field['id']}">{$field['title']} [{$field['name']}]</em>
+                                                    <input type="hidden" name="field_sort[{$key}][]" value="{$field['id']}"/>
+                                                </li>
+                                            </if>
+                                        </foreach>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+
+                <div class="form-group">
+                    <label class="item-label">列表定义<span class="check-tips">（默认列表模板的展示规则）</span></label>
+                    <div class="controls">
+                        <label class="textarea input-large">
+                            <textarea name="list_grid">{$info.list_grid}</textarea>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="item-label">默认搜索字段<span class="check-tips">（默认列表模板的默认搜索项）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="search_key" value="{$info.search_key}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">高级搜索字段<span class="check-tips">（默认列表模板的高级搜索项）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="search_list" value="{$info.search_list}">
+                    </div>
+                </div>
+            </div>
+            <div id="tab3"  class="tab-pane">
+                <div class="form-group">
+                    <label class="item-label">列表模板<span class="check-tips">（自定义的列表模板，放在对应控制器view文件夹的下面，不写则使用默认模板）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="template_list" value="{$info.template_list}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">新增模板<span class="check-tips">（自定义的新增模板，放在对应控制器view文件夹的下面，不写则使用默认模板）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="template_add" value="{$info.template_add}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">编辑模板<span class="check-tips">（自定义的编辑模板，放在对应控制器view文件夹的下面，不写则使用默认模板）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="template_edit" value="{$info.template_edit}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="item-label">列表数据大小<span class="check-tips">（默认列表模板的分页属性）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-small" name="list_row" value="{$info.list_row}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="item-label"></label>
+                <div class="controls">
+                    <input type="hidden" name="id" value="{$info['id']}"/>
+                    <button class="btn btn-sm btn-primary ajax-post no-refresh" type="submit" target-form="form-horizontal">确 定</button>
+                    <button class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</button>
+                </div>
+            </div>
+    </div>
+    </form>
+</div>
+</block>
+<block name="js">
+<script type="text/javascript" src="__VENDOR__/jquery.dragsort-0.5.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+//拖曳插件初始化
+$(function(){
+	$(".needdragsort").dragsort({
+	     dragSelector:'li',
+	     placeHolderTemplate: '<li class="draging-place">&nbsp;</li>',
+	     dragBetween:true,	//允许拖动到任意地方
+	     dragEnd:function(){
+	    	 var self = $(this);
+	    	 self.find('input').attr('name', 'field_sort[' + self.closest('ul').data('group') + '][]');
+	     }
+	 });
+})
+</script>
+</block>
+

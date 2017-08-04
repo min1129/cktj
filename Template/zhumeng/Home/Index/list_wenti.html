@@ -1,0 +1,93 @@
+<extend name="public/base"/>
+
+<block name="content">
+    <!--main tagline area-->
+    <section class="taglineWrap">
+        <div class="container">
+            <div class="row-fluid  tagline">
+                <div class="breadcrumbs">
+                    <div class="container" style="font-size: 16px;">
+                        <volist name="nav" id="av">
+                            <if condition="$i eq count($nav)">
+                                {$av.name}
+                                <else/>
+                                <a href="{$av.url}" style="color: #49afcd">{$av.name}</a>/
+                            </if>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /container -->
+    </section>
+
+    <section class="mainContentWrap">
+    <div class="container mainContent">
+    <div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="innerSpacer">
+                <!--TOC-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <!--alert success-->
+                        <div class="alert alert-block alert-info fade in">
+                            <button class="close" data-dismiss="alert">&times;</button>
+                            <h5>
+                                我们归纳整理了多数家长关心的问题，希望能解决您的疑问,如果仍然不能解决您遇到的问题请联系我们
+                                的客服热线xxx,或者在线给我们<a target="_blank" href="<c:cat who='16' field='url'/>">留言</a>，我们会尽快给您答复。
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <!--faq items-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <volist name="list" id="vo">
+                            <div class="faq">
+                                <div class="faq-heading">
+                                    <div data-target="#faq{$key}" data-toggle="collapse">
+                                        <i class="icon-question-sign"></i>
+                                        {$vo.title}
+                                    </div>
+                                </div>
+                                <div class="faq-body in" id="faq{$key}">
+                                    <div class="faq-inner">
+                                        <p>
+                                            {$vo.content|htmlspecialchars_decode}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </volist>
+                        <!--FAQ-->
+                    </div>
+                </div>
+                <!--pagination-->
+                <div class="row-fluid project-pagination">
+                    <div class="span12">
+                        {$page}
+                        <!--<div class="pagination">-->
+                        <!--<ul>-->
+                        <!--<li class="disabled"><a href="#">Prev</a></li>-->
+                        <!--<li class="active"><a href="#">1</a></li>-->
+                        <!--<li><a href="#">2</a></li>-->
+                        <!--<li><a href="#">3</a></li>-->
+                        <!--<li><a href="#">4</a></li>-->
+                        <!--<li><a href="#">Next</a></li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+
+                    </div>
+                </div>
+                <!--end pagination-->
+                <!--end faq items-->
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </section>
+</block>
+
+

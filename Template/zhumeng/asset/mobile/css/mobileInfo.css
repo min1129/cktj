@@ -1,0 +1,48 @@
+body{
+	background-color: #ededed;
+}
+.touxiang_bg p{
+	font-size: 20px;
+	text-align:center;
+	color: #fff;
+	letter-spacing: 2px;
+}
+.touxiang_bg{
+	padding: 15px;
+	height: 250px;
+	/*background:url(../images/首页_15.png) ;background-size: 100% 100%;*/
+	background-color: #b8d600;
+}
+.touxiang_bg div{
+	text-align: center;
+}
+.my_tx{
+	width: 120px;
+	height: 120px;
+	border: 3px solid #fff;
+	border-radius: 60px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.m_list{
+	background-color: #fff;
+}
+.m_list li{
+	list-style:none;
+	height: 50px;
+	line-height: 50px;
+	margin-top: -10px;
+}
+.m_list li:last-child{
+	border: none;
+}
+.m_list li img{
+	width: 20px;
+	margin-top: 15px;
+}
+.m_list li span{
+	font-size: 16px;
+	margin-left: 10px;
+	letter-spacing: 2px;
+}

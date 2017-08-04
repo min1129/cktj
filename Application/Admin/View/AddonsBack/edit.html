@@ -1,0 +1,23 @@
+<extend name="Common@Base/base"/>
+<block name="title">
+    {$meta_title}
+</block>
+<block name="content">
+    <form id="form" action="{:U('edit?name='.trim($_GET['name']))}" method="POST" class="form-horizontal normal-form">
+        <notempty name="temp">
+            {$temp}
+            <else/>
+            <include file="Common@Block/editform"/>
+        </notempty>
+        <div class="form-group">
+            <notempty name="data">
+                <input type="hidden" name="id" value="{$data.id}">
+            </notempty>
+            <button class="btn btn-sm btn-primary ajax-post" type="submit"  target-form="form-horizontal">确 定</button>
+            <a class="btn btn-sm" onclick="javascript:history.back(-1);return false;">返 回</a>
+        </div>
+    </form>
+</block>
+
+
+
